@@ -33,26 +33,15 @@ export default function OptInForm({city, lastClick = '', onSedeChange}) {
 
     const found = DataAtlas.find((sede) => sede.id === city);
 
-    const forward = `${found.url}&${urlQueryToSearchParams({
+    const forward = `${found.url}?${urlQueryToSearchParams({
       checkInDate: data.checkInDate,
       checkOutDate: data.checkOutDate,
       adults: data.adults,
       utm_source: 'notoriovs',
+      corporate_id: found.discountCode,
     })}`;
 
     const forwardUrl = encodeURIComponent(forward);
-
-    // DEBUGG
-
-    // const forwardLink = document.createElement('a');
-    // forwardLink.href = forward;
-    // forwardLink.target = '_blank';
-    // forwardLink.click();
-    //
-    // console.log('LINK', forwardLink);
-    // console.log('FORWARD', forwardUrl);
-
-    // router.push(`/thankyou?forward=${forwardUrl}`);
 
     fetch(info.optInWebhook, {
       method: 'POST',
@@ -173,7 +162,7 @@ export default function OptInForm({city, lastClick = '', onSedeChange}) {
         >{
           !sending
             ? 'Reserva →'
-            : <span className="material-symbols-outlined animate-spin">progress_activity</span>
+            : <span className="material-symbols-outlined text-brand-5 animate-spin">progress_activity</span>
         }</button>
 
         <div className="mt-4">
