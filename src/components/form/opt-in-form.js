@@ -33,13 +33,19 @@ export default function OptInForm({city, lastClick = '', onSedeChange}) {
 
     const found = DataAtlas.find((sede) => sede.id === city);
 
-    const forward = `${found.url}?${urlQueryToSearchParams({
-      checkInDate: data.checkInDate,
-      checkOutDate: data.checkOutDate,
-      adults: data.adults,
-      utm_source: 'notoriovs',
-      corporate_id: found.discountCode,
-    })}`;
+    let forward = '';
+
+    if (found.id === 'gdl') {
+      forward = found.url;
+    } else {
+      forward = `${found.url}?${urlQueryToSearchParams({
+        checkInDate: data.checkInDate,
+        checkOutDate: data.checkOutDate,
+        adults: data.adults,
+        utm_source: 'notoriovs',
+        corporate_id: found.discountCode,
+      })}`;
+    }
 
     const forwardUrl = encodeURIComponent(forward);
 
